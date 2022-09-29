@@ -10,6 +10,8 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
+  azureSubscription: '4be10f9c-ed12-47e0-89cc-f716ab83f39e'
+  appName: 'psy-web-app'
   dockerRegistryServiceConnection: 'ceaa4d92-f46e-47d8-90d8-33868c099c71'
   imageRepository: 'javascriptdocker'
   containerRegistry: 'acr67400psy.azurecr.io'
@@ -37,3 +39,11 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+
+    ## Deploy the image to the Web App "psy-web-app"
+    - task: AzureWebAppContainer@1
+      displayName: 'Azure Web App on Container Deploy'
+      inputs:
+        azureSubscription: $(azureSubscription)
+        appName: $(appName)
+        imageName: $(containerRegistry)/$(imageRepository):$(tag)
