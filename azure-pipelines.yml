@@ -33,6 +33,8 @@ variables:
 stages:
 - stage: Build
   displayName: Build and push stage
+  steps:
+  - script: echo The parameters are username: ${{ parameters.username }} - password: ${{ parameters.username }} ```
   jobs:
   - job: Build
     displayName: Build
